@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hospital Navigation</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f2f2f2;
+text-align:center;
+padding:40px;
+}
+
+.box{
+background:white;
+padding:20px;
+border-radius:10px;
+width:450px;
+margin:auto;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+select,button{
+padding:10px;
+margin:8px;
+width:90%;
+font-size:16px;
+}
+
+#result{
+margin-top:20px;
+text-align:left;
+font-size:17px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>🏥 Hospital Navigation</h2>
+
+<label>คุณอยู่ที่</label>
+
+<select id="from">
+
+<option value="OPD-1-LIFT">ตึก OPD | ชั้น 1 | ลิฟต์</option>
+<option value="OPD-1-ENT">ตึก OPD | ชั้น 1 | ทางเข้า</option>
+<option value="IPD-1-LIFT">ตึก IPD | ชั้น 1 | ลิฟต์</option>
+<option value="ER-1-ENT">ตึก ER | ชั้น 1 | ทางเข้า</option>
+
+</select>
+
+<label>ต้องการไป</label>
+
+<select id="to">
+
+<option value="OPD-1-PHARMACY">ตึก OPD | ชั้น 1 | ห้องยา</option>
+<option value="OPD-2-XRAY">ตึก OPD | ชั้น 2 | X-Ray</option>
+<option value="IPD-3-WARD">ตึก IPD | ชั้น 3 | Ward</option>
+<option value="ER-1-ER">ตึก ER | ชั้น 1 | ห้องฉุกเฉิน</option>
+
+</select>
+
+<br>
+
+<button onclick="navigate()">นำทาง</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const routes = {
+
+"OPD-1-LIFT|OPD-1-PHARMACY":`
+📍 ตึก OPD ชั้น 1<br> 
+
+1. เดินตรง 15 เมตร<br> 
+2. เลี้ยวขวา<br> 
+3. ห้องยาอยู่ด้านซ้าย<br> 
+`,
+
+"OPD-1-LIFT|OPD-2-XRAY":`
+📍 ตึก OPD
+
+1. ขึ้นลิฟต์ไปชั้น 2
+2. ออกลิฟต์แล้วเลี้ยวซ้าย
+3. ห้อง X-Ray อยู่ด้านขวา
+`,
+
+"OPD-1-LIFT|IPD-3-WARD":`
+📍 จากตึก OPD ไปตึก IPD
+
+1. เดินออกจากตึก OPD
+2. เดินตามทางเชื่อมไปตึก IPD
+3. เข้าตึก IPD
+4. ขึ้นลิฟต์ไปชั้น 3
+5. Ward อยู่ด้านหน้า
+`,
+
+"IPD-1-LIFT|OPD-1-PHARMACY":`
+📍 จากตึก IPD ไปตึก OPD
+
+1. เดินออกจากตึก IPD
+2. เดินตามทางเชื่อมไปตึก OPD
+3. เข้าตึก OPD
+4. เดินตรง 15 เมตร
+5. ห้องยาอยู่ด้านซ้าย
+`
+
+};
+
+function navigate(){
+
+let from=document.getElementById("from").value;
+let to=document.getElementById("to").value;
+
+let key=from+"|"+to;
+
+if(routes[key]){
+
+document.getElementById("result").innerHTML="<h3>เส้นทาง</h3>"+routes[key];
+
+}else{
+
+document.getElementById("result").innerHTML="⚠️ ยังไม่มีข้อมูลเส้นทาง";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
